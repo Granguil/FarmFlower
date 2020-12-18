@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Dragon from './../../model/Dragon';
 
 export const dragonSlice = createSlice({
   name: 'dragon',
@@ -7,7 +8,7 @@ export const dragonSlice = createSlice({
   },
   reducers: {
     addDragon:(state,action)=>{
-        return {...state,dragons:[...state.dragons,action.payload]}
+        return {...state,dragons:[...state.dragons,new Dragon(action.payload)]}
     },
     removeDragon:(state,action)=>{
         const newState=[...state.dragons];
@@ -18,11 +19,21 @@ export const dragonSlice = createSlice({
         const newState=[...state.dragons];
         newState.reverse();
         return {...state,dragons:[...newState]}
-    }
+    },
+    rename:(state,action)=>{
+        const newState=[...state.dragons];
+        newState[action.payload.id]={...newState[action.payload.id],name:action.payload.name};
+        return {...state,dragons:[...newState]}
+    },
+    eat:(state,action)=>{
+        const newState=[...state.dragons];
+        newState[action.payload.id]={...newState[action.payload.id],niveau:newState[action.payload.id].niveau+1};
+        return {...state,dragons:[...newState]}
+      }
   },
 });
 
-export const { addDragon, removeDragon, reverse} = dragonSlice.actions;
+export const { addDragon, removeDragon, reverse, rename, eat} = dragonSlice.actions;
 
 export const selectDragons = state => state.dragon.dragons;
 

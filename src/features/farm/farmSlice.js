@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import {eat as eatDragon} from './../dragon/DragonSlice';
 
 export const farmSlice = createSlice({
   name: 'farm',
@@ -86,12 +87,16 @@ export const farmSlice = createSlice({
     },
     play:(state)=>{
       return {...state,playedTime:state.playedTime+1}
-    }
-
+    },
   },
+  extraReducers:{
+    [eatDragon]:(state,action)=>{
+      return {...state,carotte:{...state.carotte,number:state.carotte.number-action.payload.niveau*2},avocat:{...state.avocat,number:state.avocat.number-action.payload.niveau}}
+    }
+  }
 });
 
-export const { increment, sell, buy, growing, doTick, timer, play} = farmSlice.actions;
+export const { increment, sell, buy, growing, doTick, timer, play, eat} = farmSlice.actions;
 
 export const chrono=()=>dispatch=>
     {
