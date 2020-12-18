@@ -1,0 +1,15 @@
+.display{
+    display:flex;
+    justify-content:center;
+    width:100%;
+}
+
+.col{
+    width:35%;
+    margin:0 5%;
+    border:dotted red 3px;
+}
+
+.button{
+    margin-left:20px;
+}

@@ -6,6 +6,7 @@ import {Farm} from './features/farm/Farm';
 import './App.css';
 import { selectAvocatNumber, selectAvocatField, selectCarotteNumber,selectCarotteField, chrono, selectCarotteTime, selectAvocatTime, selectCarotteCounter, selectAvocatCounter, selectPlayedTime } from './features/farm/farmSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import Dragon from './features/dragon/Dragon';
 
 function App() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <Dragon/>
         <Counter />
         <span>Temps de Jeu : {useSelector(selectPlayedTime)}</span>
         <Farm name="carotte" number={useSelector(selectCarotteNumber)} fields={useSelector(selectCarotteField)} time={useSelector(selectCarotteTime)} counter={useSelector(selectCarotteCounter)}/>
