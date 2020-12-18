@@ -12,9 +12,10 @@ export const farmSlice = createSlice({
     avocat : {
       field:0,
       number:0,
-      time:4,
+      time:3,
       compteur:0
     },
+    playedTime:0,
     money:0,
     tick:false,
     isGrowing:false,
@@ -24,7 +25,7 @@ export const farmSlice = createSlice({
       
       switch(payload){
       case "carotte":
-        console.timeEnd("Avocat");
+        
         return {...state, carotte:{...state.carotte,number:state.carotte.number+state.carotte.field}}
       case "avocat":
         
@@ -34,7 +35,7 @@ export const farmSlice = createSlice({
       }
     },
     sell: (state,{payload}) => {
-      console.log(payload);
+      
       switch(payload){
       case "carotte":
         return {...state,carotte:{...state.carotte,number:0},money:state.money+state.carotte.number*5}
@@ -48,7 +49,7 @@ export const farmSlice = createSlice({
     buy: (state,{payload}) => {
       switch(payload){
       case "carotte":
-        console.time("Avocat");
+        
         return {...state,money:state.money-20,carotte:{...state.carotte,field:state.carotte.field+1}}
       case "avocat":
         
@@ -82,16 +83,21 @@ export const farmSlice = createSlice({
         default:
           return state;
       }
+    },
+    play:(state)=>{
+      return {...state,playedTime:state.playedTime+1}
     }
+
   },
 });
 
-export const { increment, sell, buy, growing, doTick, timer} = farmSlice.actions;
+export const { increment, sell, buy, growing, doTick, timer, play} = farmSlice.actions;
 
 export const chrono=()=>dispatch=>
     {
         setInterval(()=>{
-            dispatch(doTick())
+            dispatch(doTick());
+            dispatch(play());
             },1000);
             
         
@@ -109,4 +115,22 @@ export const selectAvocatCounter = state => state.farm.avocat.compteur;
 export const selectMoney = state => state.farm.money;
 export const selectTick = state => state.farm.tick;
 export const selectGrowing = state => state.farm.isGrowing;
+export const selectPlayedTimeInS = state => state.farm.playedTime;
+export const selectPlayedTime = state => {
+  let timeInS=Number(state.farm.playedTime);
+  let h=Math.floor(timeInS/3600);
+  timeInS-=h*3600;
+  let m=Math.floor(timeInS/60);
+  timeInS-=m*60;
+  if(h<10){
+    h="0"+h;
+  }
+  if(m<10){
+    m="0"+m;
+  }
+  if(timeInS<10){
+    timeInS="0"+timeInS;
+  }
+  return h+":"+m+":"+timeInS;
+}
 export default farmSlice.reducer;

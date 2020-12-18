@@ -1,26 +1,21 @@
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {increment,sell, buy, selectMoney, selectTick, growing, selectGrowing,timer} from './farmSlice';
+import {increment,sell, buy, selectMoney, growing, selectGrowing, selectPlayedTimeInS} from './farmSlice';
 import styles from './Farm.module.css';
 
 
-export function Farm({name,number,fields,time, counter}) {
+export function Farm({name,number,fields,time}) {
   
   const moneys = useSelector(selectMoney);
-  const tick = useSelector(selectTick);
   const isGrowing = useSelector(selectGrowing);
+  const playedTime = useSelector(selectPlayedTimeInS);
   const dispatch = useDispatch();
   
-   useEffect(() => {
-       if(isGrowing===true){
-          dispatch(timer(name));
-       }
-   }, [tick,dispatch,isGrowing])
    useEffect(()=>{
-    if(counter===time){
+    if(playedTime%time===0 && isGrowing){
       dispatch(increment(name));
     }
-   },[counter])
+   },[playedTime,dispatch,name,time])
   return (
     <div>
       <div className={styles.row}>
@@ -38,13 +33,13 @@ export function Farm({name,number,fields,time, counter}) {
           Vendre {name}
         </button>
         
-        <button
+        {moneys>20?<button
           className={styles.button}
           aria-label="Acheter Champ"
           onClick={() => dispatch(buy(name))}
         >
           Acheter Champ
-        </button>
+        </button>:null}
       </div>
 
     </div>
