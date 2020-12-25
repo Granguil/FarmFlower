@@ -20,8 +20,8 @@ function App() {
         <Dragon/>
         <Counter />
         <span>Temps de Jeu : {useSelector(selectPlayedTime)}</span>
-        <Farm name="carotte" number={useSelector(selectCarotteNumber)} fields={useSelector(selectCarotteField)} time={useSelector(selectCarotteTime)} counter={useSelector(selectCarotteCounter)}/>
-        <Farm name="avocat" number={useSelector(selectAvocatNumber)} fields={useSelector(selectAvocatField)} time={useSelector(selectAvocatTime)} counter={useSelector(selectAvocatCounter)}/>
+        <Farm type={1} name="carotte" number={useSelector(selectCarotteNumber)} fields={useSelector(selectCarotteField)} time={useSelector(selectCarotteTime)} counter={useSelector(selectCarotteCounter)}/>
+        <Farm type={2} name="avocat" number={useSelector(selectAvocatNumber)} fields={useSelector(selectAvocatField)} time={useSelector(selectAvocatTime)} counter={useSelector(selectAvocatCounter)}/>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>

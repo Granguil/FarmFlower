@@ -18,8 +18,8 @@ export const farmSlice = createSlice({
     },
     playedTime:0,
     money:0,
-    tick:false,
     isGrowing:false,
+    isGrowingType:0,
   },
   reducers: {
     increment: (state,{payload}) => {
@@ -60,11 +60,16 @@ export const farmSlice = createSlice({
       }
       
     },
-    doTick:(state)=>{
-        return {...state,tick:!state.tick}
-    },
-    growing:(state)=>{
-        return {...state,isGrowing:!state.isGrowing}
+    growing:(state,{payload})=>{
+      if(!state.isGrowing){
+        return {...state,isGrowingType:payload,isGrowing:true}
+      }else{
+        if(payload===state.isGrowingType){
+          return {...state,isGrowing:false,isGrowingType:0}
+        }else{
+          return {...state,isGrowingType:payload}
+        }
+      }
     },
     timer:(state,{payload})=>{
       let c;
@@ -101,7 +106,6 @@ export const { increment, sell, buy, growing, doTick, timer, play, eat} = farmSl
 export const chrono=()=>dispatch=>
     {
         setInterval(()=>{
-            dispatch(doTick());
             dispatch(play());
             },1000);
             
@@ -121,6 +125,7 @@ export const selectMoney = state => state.farm.money;
 export const selectTick = state => state.farm.tick;
 export const selectGrowing = state => state.farm.isGrowing;
 export const selectPlayedTimeInS = state => state.farm.playedTime;
+export const selectIsGrowingType = state => state.farm.isGrowingType;
 export const selectPlayedTime = state => {
   let timeInS=Number(state.farm.playedTime);
   let h=Math.floor(timeInS/3600);
@@ -137,5 +142,7 @@ export const selectPlayedTime = state => {
     timeInS="0"+timeInS;
   }
   return h+":"+m+":"+timeInS;
-}
+};
+
+
 export default farmSlice.reducer;

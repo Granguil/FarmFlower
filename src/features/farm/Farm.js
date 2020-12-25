@@ -1,18 +1,18 @@
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {increment,sell, buy, selectMoney, growing, selectGrowing, selectPlayedTimeInS} from './farmSlice';
+import {increment,sell, buy, selectMoney, growing, selectGrowing, selectPlayedTimeInS, selectIsGrowingType} from './farmSlice';
 import styles from './Farm.module.css';
 
 
-export function Farm({name,number,fields,time}) {
+export function Farm({name,number,fields,time,type}) {
   
   const moneys = useSelector(selectMoney);
   const isGrowing = useSelector(selectGrowing);
   const playedTime = useSelector(selectPlayedTimeInS);
+  const isGrowingType = useSelector(selectIsGrowingType);
   const dispatch = useDispatch();
-  
    useEffect(()=>{
-    if(playedTime%time===0 && isGrowing){
+    if(playedTime%time===0 && isGrowing && isGrowingType===type){
       dispatch(increment(name));
     }
    },[playedTime,dispatch,name,time])
@@ -24,7 +24,7 @@ export function Farm({name,number,fields,time}) {
         <div><span>Argent : </span><span>{moneys}$</span></div>
         
         <button
-        onClick={()=>dispatch(growing())}>{isGrowing?"Arrêter":"Produire"}</button>
+        onClick={()=>dispatch(growing(type))}>{isGrowingType===type?"Arrêter":"Produire"}</button>
         <button
           className={styles.button}
           aria-label="Vendre"
