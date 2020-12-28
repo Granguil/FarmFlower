@@ -1,0 +1,61 @@
+.chemin{
+    background-color: lightgray;
+}
+
+.bord{
+    background-color: brown;
+}
+
+.cellule{
+    width:80px;
+    height:80px;
+}
+
+#TD{
+    border-collapse: collapse;
+    position: relative;
+    border-spacing: 0;
+}
+
+.ennemi{
+    width:10px;
+    height:10px;
+    border-radius: 50%;
+    position: absolute;
+    right:0px;
+    background-color: black;
+}
+
+.ennemiCH{
+    top:175px;
+}
+
+.ennemiCC{
+    top:200px;
+}
+
+.ennemiCB{
+    top:225px;
+}
+
+.tour{
+    width:100%;
+    height:100%;
+    border-radius: 50%;
+    font-size:40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feu{
+    background-color: red;
+    color: white;
+}
+
+.missile{
+    width:5px;
+    height:5px;
+    background-color: red;
+    position:absolute;
+}
