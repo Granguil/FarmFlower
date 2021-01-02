@@ -21,7 +21,7 @@ function Dragon() {
     }
     const [name,newName]= useState("");
     const [id,edit]= useState(-1);
-    const [nameEdit,newNameEdit] = useState("");  
+    const [nameEdit,newNameEdit] = useState(""); 
     return (
         <div className={Style.display}>
             <div className={Style.col}>

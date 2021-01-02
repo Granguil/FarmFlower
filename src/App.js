@@ -7,6 +7,8 @@ import './App.css';
 import { selectAvocatNumber, selectAvocatField, selectCarotteNumber,selectCarotteField, chrono, selectCarotteTime, selectAvocatTime, selectCarotteCounter, selectAvocatCounter, selectPlayedTime } from './features/farm/farmSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import Dragon from './features/dragon/Dragon';
+import Match3 from './features/Match3/Match3';
+import TD from './features/TD/TD';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +24,8 @@ function App() {
         <span>Temps de Jeu : {useSelector(selectPlayedTime)}</span>
         <Farm type={1} name="carotte" number={useSelector(selectCarotteNumber)} fields={useSelector(selectCarotteField)} time={useSelector(selectCarotteTime)} counter={useSelector(selectCarotteCounter)}/>
         <Farm type={2} name="avocat" number={useSelector(selectAvocatNumber)} fields={useSelector(selectAvocatField)} time={useSelector(selectAvocatTime)} counter={useSelector(selectAvocatCounter)}/>
+        <Match3/>
+        <TD/>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
