@@ -19,9 +19,6 @@ function Match3() {
     }, [dragonFeu1])
     const grille=useSelector(selectGrille);
     const Points=useSelector(selectPoints);
-    const UpdateDragon= ()=>{
-        dispatch(dragonFeu({...dragonFeu1}));
-    }
     return (
         <div>
         <table>
@@ -49,7 +46,6 @@ function Match3() {
             <tr><th>Niveau/Bonus</th><td>{dragonFeu1.niveau}</td></tr>
         </tbody>
     </table>
-    <button onClick={()=>UpdateDragon()}>Mettre à Jour</button>
         </div>
     )
 }

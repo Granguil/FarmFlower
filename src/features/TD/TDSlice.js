@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import style from './TD.module.css';
 import $ from 'jquery';
+import { addDragon } from '../dragon/DragonSlice';
 
 const findIndex=(tab,id)=>{
     let compteur=0;
@@ -25,7 +26,7 @@ export const TDSlice = createSlice({
     nbParvague:5,
     grille:[],
     chemin:{x:7,y:2},
-    nbToursRestantes:2,
+    nbToursRestantes:0,
     ennemis:[],
     finVague:0,
     vagueEnCours:0,
@@ -150,13 +151,13 @@ export const TDSlice = createSlice({
         })
         //alert(JSON.stringify(ennemisListe));
         return {...state,ennemis:ennemisListe}
-    }
+    },
   },
-  /*extraReducers:{
-    [eatDragon]:(state,action)=>{
-      return {...state,carotte:{...state.carotte,number:state.carotte.number-action.payload.niveau*2},avocat:{...state.avocat,number:state.avocat.number-action.payload.niveau}}
+  extraReducers:{
+    [addDragon]:(state)=>{
+      return {...state,nbToursRestantes:state.nbToursRestantes+1}
     }
-  }*/
+  }
 });
 
 export const {generateTD, placementTour, ennemiCreated, moveVague, newVague, finDeLaVague, degat} = TDSlice.actions;

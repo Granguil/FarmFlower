@@ -23,6 +23,7 @@ function TD() {
     }
     return (
         <div>
+            <span>Vous avez {nbTours} tours de feu (nombre de dragons) à placer.</span>
             <div><button onClick={()=>start()}>Lancer</button></div>
             <div id="PV">{ennemis.map((ennemi,index)=>{
                 return ennemi.pv>0 && ennemi.traverse===0? "PV"+(index+1)+" : "+ennemi.pv+",":null;
