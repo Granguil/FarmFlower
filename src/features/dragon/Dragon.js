@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDragon, selectDragons, removeDragon, reverse, rename, eat } from './DragonSlice'
 import Style from './Dragon.module.css';
+import { selectAvocatNumber, selectCarotteNumber } from '../farm/farmSlice';
 
 function Dragon() {
     const dragons=useSelector(selectDragons);
@@ -23,6 +24,8 @@ function Dragon() {
     const [id,edit]= useState(-1);
     const [nameEdit,newNameEdit] = useState("");
     const [element,newElement]= useState("Feu"); 
+    const nbCarottes=useSelector(selectCarotteNumber);
+    const nbAvocats=useSelector(selectAvocatNumber);
     return (
         <div className={Style.display}>
             <div className={Style.col}>
@@ -41,7 +44,7 @@ function Dragon() {
                         
                         return <li key={index}>{index!==id?dragon.name +" de "+dragon.element+" de niveau "+ dragon.niveau
                             :<input type="text" value={nameEdit} onChange={(e)=>newNameEdit(e.target.value)}/> }
-                            {index!==id?<span><button className={Style.button} onClick={()=>dispatch(eat({id:index,niveau:dragon.niveau}))}>Nourrir</button>
+                            {index!==id?<span>{nbAvocats>=dragon.niveau && nbCarottes>=dragon.niveau*2?<button className={Style.button} onClick={()=>dispatch(eat({id:index,niveau:dragon.niveau}))}>Nourrir</button>:null}
                             <button className={Style.button} onClick={()=>editId(index,dragon.name)}>Edit</button></span>
                             :<button className={Style.button} onClick={()=>editDragonName()}>Valider</button>}
                             {id===-1?<button className={Style.button} onClick={()=>dispatch(removeDragon(index))}>X</button>
