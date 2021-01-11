@@ -20,6 +20,7 @@ export const farmSlice = createSlice({
     money:0,
     isGrowing:false,
     isGrowingType:0,
+    isStoping:false,
   },
   reducers: {
     increment: (state,{payload}) => {
@@ -61,6 +62,7 @@ export const farmSlice = createSlice({
       
     },
     growing:(state,{payload})=>{
+      if(!state.isStoping){
       if(!state.isGrowing){
         return {...state,isGrowingType:payload,isGrowing:true}
       }else{
@@ -70,6 +72,7 @@ export const farmSlice = createSlice({
           return {...state,isGrowingType:payload}
         }
       }
+    }
     },
     timer:(state,{payload})=>{
       let c;
@@ -93,6 +96,12 @@ export const farmSlice = createSlice({
     play:(state)=>{
       return {...state,playedTime:state.playedTime+1}
     },
+    stopChrono:(state)=>{
+      return {...state,isStoping:true,isGrowing:false,isGrowingType:0}
+    },
+    go:(state)=>{
+      return {...state,isStoping:false}
+    }
   },
   extraReducers:{
     [eatDragon]:(state,action)=>{
@@ -101,17 +110,25 @@ export const farmSlice = createSlice({
   }
 });
 
-export const { increment, sell, buy, growing, doTick, timer, play, eat} = farmSlice.actions;
+export const { increment, sell, buy, growing, doTick, timer, play, eat, stopChrono, go} = farmSlice.actions;
 
 export const chrono=()=>dispatch=>
     {
-        setInterval(()=>{
+        dispatch(go());
+        const SI=setInterval(()=>{
             dispatch(play());
+            dispatch(stopInterval(SI));
             },1000);
             
         
 }
 
+const stopInterval=(SI)=>(dispatch,getState)=>{
+  const state=getState();
+  if(state.farm.isStoping){
+    clearInterval(SI);
+  }
+}
 
 export const selectCarotteField = state => state.farm.carotte.field;
 export const selectCarotteNumber = state => state.farm.carotte.number;
@@ -126,6 +143,7 @@ export const selectTick = state => state.farm.tick;
 export const selectGrowing = state => state.farm.isGrowing;
 export const selectPlayedTimeInS = state => state.farm.playedTime;
 export const selectIsGrowingType = state => state.farm.isGrowingType;
+export const selectStop = state => state.farm.isStoping;
 export const selectPlayedTime = state => {
   let timeInS=Number(state.farm.playedTime);
   let h=Math.floor(timeInS/3600);

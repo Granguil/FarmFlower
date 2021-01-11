@@ -4,7 +4,7 @@ import {useEffect} from 'react';
 import { Counter } from './features/counter/Counter';
 import {Farm} from './features/farm/Farm';
 import './App.css';
-import { selectAvocatNumber, selectAvocatField, selectCarotteNumber,selectCarotteField, chrono, selectCarotteTime, selectAvocatTime, selectCarotteCounter, selectAvocatCounter, selectPlayedTime } from './features/farm/farmSlice';
+import { stopChrono, selectStop, selectAvocatNumber, selectAvocatField, selectCarotteNumber,selectCarotteField, chrono, selectCarotteTime, selectAvocatTime, selectCarotteCounter, selectAvocatCounter, selectPlayedTime } from './features/farm/farmSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import Dragon from './features/dragon/Dragon';
 import Match3 from './features/Match3/Match3';
@@ -12,6 +12,7 @@ import TD from './features/TD/TD';
 
 function App() {
   const dispatch = useDispatch();
+  const stop=useSelector(selectStop);
   useEffect(()=>{
     dispatch(chrono())
   },[]);
@@ -21,7 +22,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <Dragon/>
         <Counter />
-        <span>Temps de Jeu : {useSelector(selectPlayedTime)}</span>
+        <span>Temps de Jeu : {useSelector(selectPlayedTime)}</span><button onClick={()=>stop?dispatch(chrono()):dispatch(stopChrono())}>{stop?"Redémarrez":"Arrêter"}</button>
         <Farm type={1} name="carotte" number={useSelector(selectCarotteNumber)} fields={useSelector(selectCarotteField)} time={useSelector(selectCarotteTime)} counter={useSelector(selectCarotteCounter)}/>
         <Farm type={2} name="avocat" number={useSelector(selectAvocatNumber)} fields={useSelector(selectAvocatField)} time={useSelector(selectAvocatTime)} counter={useSelector(selectAvocatCounter)}/>
         <Match3/>

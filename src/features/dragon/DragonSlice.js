@@ -8,7 +8,7 @@ export const dragonSlice = createSlice({
   },
   reducers: {
     addDragon:(state,action)=>{
-        return {...state,dragons:[...state.dragons,new Dragon(action.payload)]}
+        return {...state,dragons:[...state.dragons,new Dragon(action.payload.name,action.payload.element)]}
     },
     removeDragon:(state,action)=>{
         const newState=[...state.dragons];
@@ -36,5 +36,20 @@ export const dragonSlice = createSlice({
 export const { addDragon, removeDragon, reverse, rename, eat} = dragonSlice.actions;
 
 export const selectDragons = state => state.dragon.dragons;
+export const selectDragonFeu = state =>{
+  let dragonFeu=null;
+  if(state.dragon.dragons.length===0){
+    dragonFeu=new Dragon("Default","Feu");
+  }
+  state.dragon.dragons.forEach(dragon=> {
+    if(dragon.element==="Feu" && dragonFeu===null){
+      dragonFeu=dragon;
+    }
+    if(dragonFeu===null){
+      dragonFeu=new Dragon("Default","Feu");
+    }
+  });
+  return dragonFeu;
+}
 
 export default dragonSlice.reducer;

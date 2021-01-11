@@ -21,13 +21,15 @@ function Dragon() {
     }
     const [name,newName]= useState("");
     const [id,edit]= useState(-1);
-    const [nameEdit,newNameEdit] = useState(""); 
+    const [nameEdit,newNameEdit] = useState("");
+    const [element,newElement]= useState("Feu"); 
     return (
         <div className={Style.display}>
             <div className={Style.col}>
                 <label htmlFor="new">Nouveau Dragon</label><br/>
                 <input id="new" type="text" value={name} onChange={(e)=>newName(e.target.value)}/><br/>
-                <button onClick={()=>newDragon(name)}>Ajouter</button><br/>
+                <input type="radio" name="element" value="feu" checked onChange={(e)=>newElement(e.target.value)} />Feu<br/>
+                <button onClick={()=>newDragon({name,element})}>Ajouter</button><br/>
                 <button onClick={()=>dispatch(reverse())}>Inverser Liste</button><br/>
                 {id!==-1?<button onClick={()=>edit(-1)}>Arrêter Modification</button>:null}        
                 </div>
@@ -37,7 +39,7 @@ function Dragon() {
                     
                     dragons.map((dragon,index)=>{
                         
-                        return <li key={index}>{index!==id?dragon.name +" de niveau "+ dragon.niveau
+                        return <li key={index}>{index!==id?dragon.name +" de "+dragon.element+" de niveau "+ dragon.niveau
                             :<input type="text" value={nameEdit} onChange={(e)=>newNameEdit(e.target.value)}/> }
                             {index!==id?<span><button className={Style.button} onClick={()=>dispatch(eat({id:index,niveau:dragon.niveau}))}>Nourrir</button>
                             <button className={Style.button} onClick={()=>editId(index,dragon.name)}>Edit</button></span>
