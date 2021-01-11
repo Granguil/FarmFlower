@@ -66,7 +66,8 @@ export const MatchSlice = createSlice({
                 }
             }
         }
-        return {...state,grille:grille}
+        console.log(grille);
+        return {...state,grille:[...grille]}
     },
     newIdSwap:(state)=>{
         return {...state,idSwap:[...[]]};
@@ -281,7 +282,7 @@ const NewMatch=()=>(dispatch,getState)=>{
             }
         }
     }
-    dispatch(majGrille([...grille]));
+    //dispatch(majGrille([...grille]));
     for(let coord of coordASuppr){
         //grille[coord.y][coord.x]="S";
         
@@ -295,7 +296,7 @@ const NewMatch=()=>(dispatch,getState)=>{
         setTimeout(()=>{
             dispatch(RemoveTuile(coordASuppr));
             dispatch(NewMatch());
-        },1500);
+        },2500);
     }
 }
 
@@ -333,8 +334,9 @@ const RemoveTuile=(coordASuppr)=>(dispatch,getState)=>{
     }
     pointsAjoutés+=NbPoints(compteur)*bonus;
     dispatch(addPoints(pointsAjoutés));
-    dispatch(remplacement());
     dispatch(majGrille([...grille]));
+    dispatch(remplacement());
+    
 }
 
 export const selectGrille = state => state.match.grille;
